@@ -34,3 +34,13 @@ subset1000 <- songs %>%
   collect()
 
 write_csv(subset1000, "data-processed/subset1000.csv")
+
+## let's take a few more rows
+subset_100k_top <- songs %>%
+  select(track_id, title, song_id, release, artist_id, artist_name, year, duration, artist_hotttnesss, artist_familiarity) %>%
+  head(n = 100000) %>% 
+  collect()
+
+write_csv(subset_100k_top, "data-processed/subset_100k_top.csv")
+
+
