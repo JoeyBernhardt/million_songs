@@ -4,6 +4,7 @@
 library(tidyverse)
 library(dbplyr)
 library(RSQLite)
+
 # read in the metadata ----------------------------------------------------
 
 
@@ -15,6 +16,9 @@ metadata
 songs <- tbl(metadata, "songs")
 
 
+# pull out some subsets to start ------------------------------------------
+
+
 year_2010 <- songs %>%
   select(track_id, title, song_id, release, artist_id, artist_name, year, duration, artist_hotttnesss, artist_familiarity) %>% 
   filter(year > 2010) %>% 
@@ -22,3 +26,11 @@ year_2010 <- songs %>%
 
 
 write_csv(year_2010, "data-processed/metadata_snippet_2010.csv")
+
+
+subset1000 <- songs %>%
+  select(track_id, title, song_id, release, artist_id, artist_name, year, duration, artist_hotttnesss, artist_familiarity) %>%
+  head(n = 1000) %>% 
+  collect()
+
+write_csv(subset1000, "data-processed/subset1000.csv")
