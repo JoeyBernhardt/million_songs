@@ -39,8 +39,8 @@ write_csv(subset1000, "data-processed/subset1000.csv")
 subset_100k_top <- songs %>%
   select(track_id, title, song_id, release, artist_id, artist_name, year, duration, artist_hotttnesss, artist_familiarity) %>%
   head(n = 100000) %>% 
-  collect()
+  collect() %>% 
+  sample_n(1000)
 
-write_csv(subset_100k_top, "data-processed/subset_100k_top.csv")
-
+write_csv(subset_100k_top, "data-processed/subset_1000_top.csv")
 
