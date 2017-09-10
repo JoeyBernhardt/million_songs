@@ -1,0 +1,36 @@
+---
+title: "cm008-singer"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+dplyr functions using the singer dataset
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+singer <- read_csv("data-processed/songs_subset.csv")
+singer_locations <- read_csv("data-processed/singer_locations.csv")
+```
+
+```{r}
+singer_locations %>% 
+  filter(city == "New York")
+```
+
+Mutate 
+```{r}
+singer_locations %>% 
+  mutate(artist_popularity = artist_hotttnesss*artist_familiarity)
+```
+
+```{r}
+singer_locations %>% 
+  filter(artist_name == "Rihanna")
+  ```
+

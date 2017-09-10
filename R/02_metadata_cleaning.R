@@ -59,7 +59,7 @@ year_songs <- songs %>%
 
 
 subset_years <- year_songs %>% 
-  sample_n(size = 1000, replace = FALSE)
+  sample_n(size = 10000, replace = FALSE)
 
 year0 <- songs %>%
   select(track_id, title, song_id, release, artist_id, artist_name, year, duration, artist_hotttnesss, artist_familiarity) %>%
