@@ -257,6 +257,8 @@ my_songs %>%
   summarize(min_duration = min(duration), max_duration = max(duration))
 ```
 
+*STILL working on this section, it needs more purposeful song sampling to be interesting.*
+
 Of course it would be much more interesting to see *which* country contributed these extreme observations. Is the minimum (maximum) always coming from the same country? We tackle that with window functions shortly.
 
 ### Grouped mutate
@@ -265,14 +267,15 @@ Sometimes you don't want to collapse the $n$ rows for each group into one row. Y
 
 #### Computing with group-wise summaries
 
+*placeholder text*
 Let's make a new variable that is the years of life expectancy gained (lost) relative to 1952, for each individual country. We group by country and use `mutate()` to make a new variable. The `first()` function extracts the first value from a vector. Notice that `first()` is operating on the vector of life expectancies *within each country group*.
 
 ```{r}
-my_gap %>% 
-  group_by(country) %>% 
-  select(country, year, lifeExp) %>% 
-  mutate(lifeExp_gain = lifeExp - first(lifeExp)) %>% 
-  filter(year < 1963)
+my_songs %>% 
+  group_by(artist_name) %>% 
+  select(year, artist_name, duration, artist_familiarity) %>% 
+  mutate(durating_gain = duration - first(duration)) %>% 
+  filter(year > 1963)
 ```
 
 Within country, we take the difference between life expectancy in year $i$ and life expectancy in 1952. Therefore we always see zeroes for 1952 and, for most countries, a sequence of positive and increasing numbers.
@@ -284,11 +287,11 @@ Window functions take $n$ inputs and give back $n$ outputs. Furthermore, the out
 Let's revisit the worst and best life expectancies in Asia over time, but retaining info about *which* country contributes these extreme values.
 
 ```{r}
-my_gap %>%
-  filter(continent == "Asia") %>%
-  select(year, country, lifeExp) %>%
+my_songs %>%
+  filter(artist_name == "Hot Tuna") %>%
+  select(year, duration, artist_familiarity) %>%
   group_by(year) %>%
-  filter(min_rank(desc(lifeExp)) < 2 | min_rank(lifeExp) < 2) %>% 
+  filter(min_rank(desc(duration)) < 2 | min_rank(duration) < 2) %>% 
   arrange(year) %>%
   print(n = Inf)
 ```
