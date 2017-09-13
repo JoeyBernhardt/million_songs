@@ -1,4 +1,6 @@
 
+library(tidyverse)
+
 ## replicating cm008 iteratively!
 
 singer_locations <- read_csv("data-processed/singer_locations.csv")
@@ -7,6 +9,8 @@ singer_locations <- read_csv("data-processed/singer_locations.csv")
 singer_locations2 <- singer_locations %>% 
   filter(!is.na(artist_hotttnesss), !is.na(artist_familiarity), !is.na(artist_name), !is.na(city)) %>% 
   filter(artist_hotttnesss > 0, artist_familiarity > 0) 
+
+
 
 singer_locations2 %>% 
   filter(city == "New York")
