@@ -231,30 +231,30 @@ my_songs %>%
 
 The functions you'll apply within `summarize()` include classical statistical summaries, like  `mean()`, `median()`, `var()`, `sd()`, `mad()`, `IQR()`, `min()`, and `max()`. Remember they are functions that take $n$ inputs and distill them down into 1 output.
 
-Although this may be statistically ill-advised, let's compute the average life expectancy by continent.
+Let's compute the average song duration per year, to see if there are any trends in song duration over time.
 
 ```{r}
-my_gap %>%
-  group_by(continent) %>%
-  summarize(avg_lifeExp = mean(lifeExp))
-```
-
-`summarize_each()` applies the same summary function(s) to multiple variables. Let's compute average and median life expectancy and GDP per capita by continent by year ... but only for 1952 and 2007.
-
-```{r}
-my_gap %>%
-  filter(year %in% c(1952, 2007)) %>%
-  group_by(continent, year) %>%
-  summarise_each(funs(mean, median), lifeExp, gdpPercap)
-```
-
-Let's focus just on Asia. What are the minimum and maximum life expectancies seen by year?
-
-```{r}
-my_gap %>%
-  filter(continent == "Asia") %>%
+my_songs %>%
   group_by(year) %>%
-  summarize(min_lifeExp = min(lifeExp), max_lifeExp = max(lifeExp))
+  summarize(avg_duration = mean(duration))
+```
+
+`summarize_each()` applies the same summary function(s) to multiple variables. Let's compute average and median song duration and hotness by year ... but only for 1952 and 2007.
+
+```{r}
+my_songs %>%
+  filter(year %in% c(1952, 2007)) %>%
+  group_by(year) %>%
+  summarise_each(funs(mean, median), duration, artist_hotttnesss)
+```
+
+Let's focus just on the artist named Hot Tuna. What are the minimum and maximum song durations seen by year?
+
+```{r}
+my_songs %>%
+  filter(artist_name == "Hot Tuna") %>%
+  group_by(year) %>%
+  summarize(min_duration = min(duration), max_duration = max(duration))
 ```
 
 Of course it would be much more interesting to see *which* country contributed these extreme observations. Is the minimum (maximum) always coming from the same country? We tackle that with window functions shortly.
